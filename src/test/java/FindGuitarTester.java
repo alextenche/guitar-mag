@@ -1,3 +1,10 @@
+import enums.Builder;
+import enums.Type;
+import enums.Wood;
+
+import java.util.Iterator;
+import java.util.List;
+
 public class FindGuitarTester {
 
     public static void main(String[] args) {
@@ -6,15 +13,17 @@ public class FindGuitarTester {
         Inventory inventory = new Inventory();
         initializeInventory(inventory);
 
-        inventory.addGuitar("V95693","Fender", "Stratocastor","electric", "Alder", "Alder", 1499.95);
 
-        Guitar whatErinLikes = new Guitar("", "fender", "Stratocastor", "electric", "Alder", "Alder", 0);
+        Guitar whatErinLikes = new Guitar("", Builder.FENDER, "Stratocastor", Type.ELECTRIC, Wood.ALDER, Wood.ALDER, 0);
 
-        Guitar guitar = inventory.search(whatErinLikes);
-        if (guitar != null) {
-            System.out.println("Erin, you might like this " + guitar.getBuilder() + " " + guitar.getModel() + " "
-                    + guitar.getType() + " guitar: " + guitar.getBackWood() + " back and sides,"
-                    + guitar.getTopWood() + " top. You can have it for only $" + guitar.getPrice() + "!");
+        List matchingGuitars = inventory.search(whatErinLikes);
+        if (!matchingGuitars.isEmpty()) {
+            System.out.println("Erin, you might like this guitars: ");
+            for(Iterator i = matchingGuitars.iterator(); i.hasNext();){
+                Guitar guitar = (Guitar) i.next();
+                System.out.println("We have a " + guitar.getBuilder() + " " + guitar.getModel() + " "
+                    + guitar.getType() + " guitar: " + guitar.getBackWood() + " back and sides, "
+                    + guitar.getTopWood() + " top. You can have it for only $" + guitar.getPrice() + "!");}
         } else {
             System.out.println("Sorry, Erin, we have nothing for you.");
         }
@@ -22,11 +31,11 @@ public class FindGuitarTester {
 
     private static void initializeInventory(Inventory inventory) {
         // Add guitars to the inventory...
-        Guitar guitar1 =  new Guitar("123", "homemade", "Rockastor", "electric", "backwood", "topwood", 12);
-        Guitar guitar2 =  new Guitar("234", "fender", "Stratocastor", "electric", "Alder", "Alder", 15);
 
-        inventory.addGuitar("234", "fender", "Stratocastor", "electric", "Alder", "Alder", 15);
-        inventory.addGuitar("123", "homemade", "Rockastor", "electric", "backwood", "topwood", 12);
+        inventory.addGuitar("V95693",Builder.FENDER, "Stratocastor", Type.ELECTRIC, Wood.ALDER, Wood.ALDER, 1499.95);
+        inventory.addGuitar("V234", Builder.FENDER, "Stratocastor", Type.ACOUSTIC, Wood.ALDER, Wood.ALDER, 1550.50);
+        inventory.addGuitar("V123", Builder.GIBSON, "Rockastor", Type.ACOUSTIC, Wood.INDIAN_ROSEWOOD, Wood.BRAZILIAN_ROSEWOOD, 1725.90);
+        inventory.addGuitar("V9512",  Builder.FENDER, "Stratocastor", Type.ELECTRIC, Wood.ALDER, Wood.ALDER, 1549.95);
     }
 
 }
