@@ -1,41 +1,60 @@
-import enums.Builder;
-import enums.Type;
-import enums.Wood;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Inventory {
 
-    private List<Guitar> guitars;
+    private List<Object> inventory;
 
     public Inventory() {
-        guitars = new LinkedList<Guitar>();
+        inventory = new LinkedList<Object>();
     }
 
-    public void addGuitar(String serialNumber, Builder builder, String model, Type type, Wood backWood, Wood topWood, double price, int numStrings) {
-        GuitarSpec guitarSpec = new GuitarSpec(model, builder, type, backWood, topWood, numStrings);
-        Guitar guitar = new Guitar(serialNumber, price, guitarSpec);
-        guitars.add(guitar);
+    public void addInstrument(String serialNumber, double price, InstrumentSpec spec) {
+
+        Object instrument = null;
+        if (spec instanceof GuitarSpec) {
+            instrument = new Guitar(serialNumber, price, (GuitarSpec) spec);
+        } else if (spec instanceof MandolinSpec) {
+            instrument = new Mandolin(serialNumber, price, (MandolinSpec) spec);
+        }
+        inventory.add(instrument);
     }
 
-    public Guitar getGuitar(String serialNumber) {
-        for (Guitar guitar : guitars) {
-            if (guitar.getSerialNumber().equals(serialNumber)) {
-                return guitar;
+    public Object get(String serialNumber) {
+        for (Object instrumentObject : inventory) {
+            if (instrumentObject instanceof Guitar) {
+                if (((Guitar) instrumentObject).getSerialNumber().equals(serialNumber)) {
+                    return instrumentObject;
+                }
+            }
+            if (instrumentObject instanceof Mandolin) {
+                if (((Mandolin) instrumentObject).getSerialNumber().equals(serialNumber)) {
+                    return instrumentObject;
+                }
             }
         }
         return null;
     }
 
-    public List<Guitar> search(GuitarSpec searchSpec) {
-        List<Guitar> matchingGuitars = new ArrayList<Guitar>();
-        for (Guitar guitar : guitars) {
+    public List<Object> search(GuitarSpec searchSpec) {
+        List<Object> matchingGuitars = new LinkedList<Object>();
+        for (Object object : inventory) {
+            Guitar guitar = (Guitar) object;
             if (guitar.getSpec().matches(searchSpec)) {
                 matchingGuitars.add(guitar);
             }
         }
         return matchingGuitars;
     }
+
+    public List<Object> search(MandolinSpec searchSpec) {
+        List<Object> matchingMandolins = new LinkedList<Object>();
+        for (Object object : inventory) {
+            Mandolin mandolin = (Mandolin) object;
+            if (mandolin.getSpec().matches(searchSpec))
+                matchingMandolins.add(mandolin);
+        }
+        return matchingMandolins;
+    }
+
 }
