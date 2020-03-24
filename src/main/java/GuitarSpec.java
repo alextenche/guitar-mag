@@ -2,53 +2,23 @@ import enums.Builder;
 import enums.Type;
 import enums.Wood;
 
-public class GuitarSpec {
+public class GuitarSpec extends InstrumentSpec {
 
-    private String model;
-    private Builder builder;
-    private Type type;
-    private Wood backWood, topWood;
-    private int numStrings;
+    private int numstrings;
 
-    public GuitarSpec(String model, Builder builder, Type type, Wood backWood, Wood topWood, int numStrings) {
-        this.model = model;
-        this.builder = builder;
-        this.type = type;
-        this.backWood = backWood;
-        this.topWood = topWood;
-        this.numStrings = numStrings;
+    public GuitarSpec(Builder builder, String model, Type type, Wood backWood, Wood topWood, int numstrings) {
+        super(builder, model, type, backWood, topWood);
+        this.numstrings = numstrings;
     }
 
-    public String getModel() {
-        return model;
+    public int getNumstrings() {
+        return numstrings;
     }
 
-    public Builder getBuilder() {
-        return builder;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public Wood getBackWood() {
-        return backWood;
-    }
-
-    public Wood getTopWood() {
-        return topWood;
-    }
-
-    public int getNumStrings() {
-        return numStrings;
-    }
-
-    public boolean matches(GuitarSpec otherSpec) {
-        if (builder != otherSpec.builder) return false;
-        if ((model != null) && (!model.equals("")) && (!model.equals(otherSpec.model))) return false;
-        if (type != otherSpec.type) return false;
-        if (numStrings != otherSpec.numStrings) return false;
-        if (backWood != otherSpec.backWood) return false;
-        return topWood == otherSpec.topWood;
+    public boolean matches(InstrumentSpec otherSpec) {
+        if (!super.matches(otherSpec)) return false;
+        if (!(otherSpec instanceof GuitarSpec)) return false;
+        GuitarSpec guitarSpec = (GuitarSpec) otherSpec;
+        return numstrings == guitarSpec.getNumstrings();
     }
 }
