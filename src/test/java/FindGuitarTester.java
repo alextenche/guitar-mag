@@ -2,7 +2,6 @@ import enums.Builder;
 import enums.Type;
 import enums.Wood;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class FindGuitarTester {
@@ -15,11 +14,10 @@ public class FindGuitarTester {
 
         GuitarSpec whatErinLikes = new GuitarSpec("Stratocastor", Builder.FENDER, Type.ELECTRIC, Wood.ALDER, Wood.ALDER, 12);
 
-        List matchingGuitars = inventory.search(whatErinLikes);
+        List <Guitar> matchingGuitars = inventory.search(whatErinLikes);
         if (!matchingGuitars.isEmpty()) {
             System.out.println("Erin, you might like this guitars: ");
-            for (Iterator i = matchingGuitars.iterator(); i.hasNext(); ) {
-                Guitar guitar = (Guitar) i.next();
+            for (Guitar guitar : matchingGuitars) {
                 GuitarSpec guitarSpec = guitar.getSpec();
                 System.out.println("We have a " + guitarSpec.getBuilder() + " " + guitarSpec.getModel() + " "
                         + guitarSpec.getType() + " guitar: " + guitarSpec.getBackWood() + " back and sides, "

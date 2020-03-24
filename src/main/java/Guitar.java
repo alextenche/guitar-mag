@@ -1,7 +1,3 @@
-import enums.Builder;
-import enums.Type;
-import enums.Wood;
-
 public class Guitar {
 
     private String serialNumber;

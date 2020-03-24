@@ -5,7 +5,7 @@ public enum Type {
     ACOUSTIC, ELECTRIC;
 
     public String toString() {
-        switch(this) {
+        switch (this) {
             case ACOUSTIC:
                 return "aqoustic";
             case ELECTRIC:
